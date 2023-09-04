@@ -1,0 +1,92 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FBFBFB">
+
+    <View
+        android:id="@+id/act_state_rect"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/act_disabled_background"
+        app:layout_constraintBottom_toTopOf="@+id/btn_harvest_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.606" />
+
+    <ImageView
+        android:id="@+id/act_state_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/sleep_icon"
+        app:layout_constraintBottom_toTopOf="@+id/act_state_text"
+        app:layout_constraintEnd_toEndOf="@id/act_state_rect"
+        app:layout_constraintStart_toStartOf="@id/act_state_rect"
+        app:layout_constraintTop_toTopOf="@id/act_state_rect" />
+
+    <TextView
+        android:id="@+id/act_state_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="대기중"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/act_state_img"
+        app:layout_constraintEnd_toEndOf="@id/act_state_rect"
+        app:layout_constraintStart_toStartOf="@id/act_state_rect"
+        app:layout_constraintBottom_toBottomOf="@id/act_state_rect" />
+
+    <Button
+        android:id="@+id/btn_harvest_history"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/blue_btn_background"
+        android:drawableLeft="@drawable/list_icon"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="수확내역 조회"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_intake_history"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_intake_history"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/blue_btn_background"
+        android:drawableLeft="@drawable/list_icon"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="과채류 섭취 상태 조회"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_robot_setting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_robot_setting"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="88dp"
+        android:background="@drawable/blue_btn_background"
+        android:drawableLeft="@drawable/config_icon"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="로봇 설정"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

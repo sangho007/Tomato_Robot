@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUp"
+    android:background="#E6E6E6">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingEnd="20dp"
+            android:text="ID"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/signup_id"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint=""
+            android:inputType="text"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_id">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingEnd="20dp"
+            android:text="PW"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/signup_pw"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_edittext"
+            android:inputType="textPassword"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_pw">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingEnd="20dp"
+            android:text="이름"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/signup_name"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_edittext"
+            android:inputType="text"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_robot_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_name">
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingEnd="20dp"
+            android:text="로봇 별칭"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/signup_robot_name"
+            android:layout_width="140dp"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_edittext"
+            android:inputType="text"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_robot_name">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingEnd="20dp"
+            android:text="성별"
+            android:textSize="30sp" />
+
+        <RadioGroup
+            android:id="@+id/gender_radio_group"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:textSize="18dp">
+
+            <RadioButton
+                android:id="@+id/radio_male"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:text="남성"
+                android:textSize="20sp"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/radio_female"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="여성"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_gender">
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingEnd="20dp"
+            android:text="생년월일"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/signup_birthday"
+            android:layout_width="140dp"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_edittext"
+            android:focusable="false"
+            android:inputType="text"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_signup_done"
+        android:layout_width="180dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/blue_btn_background"
+        android:text="회원가입"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_birth" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
