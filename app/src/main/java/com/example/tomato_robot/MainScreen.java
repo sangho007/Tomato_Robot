@@ -28,7 +28,8 @@ public class MainScreen extends AppCompatActivity {
         ImageView act_state_img = findViewById(R.id.act_state_img);
         TextView act_state_text = findViewById(R.id.act_state_text);
 
-        clientSocketThread = new ClientSocketThread("172.30.1.31", 12345);
+//        clientSocketThread = new ClientSocketThread("172.30.1.31", 12345);
+        clientSocketThread = new ClientSocketThread("192.168.2.3", 12345);
         clientSocketThread.start();
         act_state_rect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,7 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainScreen.this,HarvestHistory.class);
+                clientSocketThread.setNew_message("close");
                 startActivity(intent);
             }
         });
