@@ -19,12 +19,6 @@ public class MainActivity extends AppCompatActivity {
         Button btn_signin = findViewById(R.id.btn_signin);
         Button btn_signup = findViewById(R.id.btn_signup);
 
-//      ClientSocketThread clientSocketThread =  new ClientSocketThread("10.0.2.2",12345);
-//        clientSocketThread =  new ClientSocketThread("172.30.1.31",12345);
-
-        // Start the thread once here
-//        clientSocketThread.start();
-
         btn_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+
+
         super.onDestroy();
 
         // When activity is destroyed, interrupt the thread.

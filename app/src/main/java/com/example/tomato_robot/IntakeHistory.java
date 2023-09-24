@@ -1,5 +1,7 @@
 package com.example.tomato_robot;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +26,8 @@ public class IntakeHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intake_history);
 
-        initData();
+        AppVariable app = (AppVariable) getApplicationContext();
+        intakeItems = app.getIntakeItems();
 
         recyclerView = findViewById(R.id.recycler_view);
 
@@ -31,20 +35,42 @@ public class IntakeHistory extends AppCompatActivity {
         recyclerView.setAdapter(new IntakeAdapter(intakeItems));
     }
 
-    private void initData() {
-        intakeItems = new ArrayList<>();
-        intakeItems.add(new IntakeItem("Item Title 1", R.drawable.yes_icon));
-        intakeItems.add(new IntakeItem("Item Title 2", R.drawable.yes_icon));
-        // 다른 항목들도 여기에 추가하여 표시할 아이템을 목록에 추가합니다.
-    }
+
+
+
 
     static class IntakeItem {
+        public void setDate(String date) {
+            this.date = date;
+        }
+
         private String date;
+
+        public void setImageId(int imageId) {
+            this.imageId = imageId;
+        }
+
         private int imageId;
 
-        public IntakeItem(String date, int imageId) {
+        public void setWeight(String weight) {
+            this.weight = weight;
+        }
+
+        public String getWeight() {
+            return weight;
+        }
+
+        private String weight;
+
+        public IntakeItem(String date, String weight) {
             this.date = date;
-            this.imageId = imageId;
+            this.weight = weight;
+
+            if(Integer.parseInt(this.weight.toString()) >= 400){
+                this.imageId = R.drawable.yes_icon;
+            }else{
+                this.imageId = R.drawable.no_icon;
+            }
         }
 
         public String getDate() {
@@ -74,7 +100,19 @@ public class IntakeHistory extends AppCompatActivity {
         public void onBindViewHolder(ViewHolder holder, int position) {
             IntakeItem intakeItem = mData.get(position);
             holder.title.setText(intakeItem.getDate());
+
             holder.icon.setImageResource(intakeItem.getImageId());
+
+            holder.btn_detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, IntakeDetail.class);
+                    intent.putExtra("date",intakeItem.getDate());
+                    intent.putExtra("weight",intakeItem.getWeight());
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override
@@ -86,10 +124,13 @@ public class IntakeHistory extends AppCompatActivity {
             TextView title;
             ImageView icon;
 
+            Button btn_detail;
+
             public ViewHolder(View itemView) {
                 super(itemView);
                 title = itemView.findViewById(R.id.intake_date);
                 icon = itemView.findViewById(R.id.intake_yes_no_icon);
+                btn_detail = itemView.findViewById(R.id.btn_view_intake_detail);
             }
         }
     }

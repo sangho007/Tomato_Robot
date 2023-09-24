@@ -188,7 +188,7 @@
             android:layout_width="140dp"
             android:layout_height="48dp"
             android:background="@drawable/rounded_edittext"
-            android:focusable="false"
+            android:focusable="true"
             android:inputType="text"
             android:textSize="18dp" />
 

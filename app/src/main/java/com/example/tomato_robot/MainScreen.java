@@ -9,10 +9,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainScreen extends AppCompatActivity {
 
     private ClientSocketThread clientSocketThread;
     AppVariable app_variable = new AppVariable();
+
+    private ArrayList<HarvestHistory.HarvestItem> harvestItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +32,38 @@ public class MainScreen extends AppCompatActivity {
         ImageView act_state_img = findViewById(R.id.act_state_img);
         TextView act_state_text = findViewById(R.id.act_state_text);
 
+        AppVariable app = (AppVariable) getApplicationContext();
+        harvestItems = app.getHarvestItemList();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Sleep for 3000 ms (3 seconds)
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Update your variable here after 3 seconds.
+                        app_variable.act_state = ("operating");
+                        act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_enabled_background));
+                        act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.act_icon));
+                        act_state_text.setText(app_variable.act_state);
+                    }
+                });
+            }
+        }).start();
+
+
 //        clientSocketThread = new ClientSocketThread("172.30.1.31", 12345);
-        clientSocketThread = new ClientSocketThread("192.168.2.3", 12345);
+//        clientSocketThread = new ClientSocketThread("192.168.2.2", 12345);
+        clientSocketThread = new ClientSocketThread("192.168.0.205", 12345); // 젯슨 AESLAB 공유기 내부주소
         clientSocketThread.start();
+
         act_state_rect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +80,8 @@ public class MainScreen extends AppCompatActivity {
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.sleep_icon));
                     act_state_text.setText(app_variable.act_state);
                     clientSocketThread.setNew_message("waiting");
+                    app.harvestItems.add(new HarvestHistory.HarvestItem("2023-09-20","423"));
+                    app.intakeItems.add(new IntakeHistory.IntakeItem("2023-09-20","423"));
                 }
             }
         });
@@ -55,7 +90,7 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainScreen.this,HarvestHistory.class);
-                clientSocketThread.setNew_message("close");
+
                 startActivity(intent);
             }
         });
@@ -72,8 +107,19 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainScreen.this,RobotSetting.class);
+                clientSocketThread.setNew_message("close");
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // When activity is destroyed, interrupt the thread.
+        if (clientSocketThread != null) {
+            clientSocketThread.interrupt();
+        }
     }
 }
