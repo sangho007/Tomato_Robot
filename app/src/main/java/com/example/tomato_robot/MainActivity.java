@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ClientSocketThread clientSocketThread;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MainScreen.class);
-//                clientSocketThread.setNew_message("operating");
+
 
                 // Set the message to send and let the thread handle it in its own time.
 
@@ -38,21 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
                 // Set the message to send and let the thread handle it in its own time.
 
-//                clientSocketThread.setNew_message("waiting");
+
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-
-
-        super.onDestroy();
-
-        // When activity is destroyed, interrupt the thread.
-        if (clientSocketThread != null) {
-            clientSocketThread.interrupt();
-        }
     }
 }

@@ -35,7 +35,6 @@ public class HarvestHistory extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new HarvestAdapter((harvestItems)));
-
     }
 
 

@@ -6,6 +6,11 @@ import java.util.ArrayList;
 
 public class AppVariable extends Application {
     String act_state = "waiting";
+    boolean socketFlag = false;
+
+    ClientSocketThread socketThread;
+
+
 
     public ArrayList<HarvestHistory.HarvestItem> harvestItems;
 
@@ -39,4 +44,24 @@ public class AppVariable extends Application {
         return this.harvestItems;
     }
     public ArrayList<IntakeHistory.IntakeItem>getIntakeItems(){return this.intakeItems;}
+
+    public ClientSocketThread getSocketThread() {
+        return socketThread;
+    }
+
+    public void setSocketThread(ClientSocketThread socketThread) {
+        this.socketThread = socketThread;
+    }
+
+    public void initSocketThread(String ip,int port){
+        if (!socketFlag){
+            this.socketThread = new ClientSocketThread(ip,port);
+            this.socketThread.start();
+            socketFlag = true;
+        }
+    }
+
+    public void setNew_message(String message){
+        this.socketThread.setNew_message(message);
+    }
 }

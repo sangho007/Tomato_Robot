@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class MainScreen extends AppCompatActivity {
 
-    private ClientSocketThread clientSocketThread;
-    AppVariable app_variable = new AppVariable();
+//    private ClientSocketThread clientSocketThread;
+
 
     private ArrayList<HarvestHistory.HarvestItem> harvestItems;
 
@@ -32,8 +32,13 @@ public class MainScreen extends AppCompatActivity {
         ImageView act_state_img = findViewById(R.id.act_state_img);
         TextView act_state_text = findViewById(R.id.act_state_text);
 
-        AppVariable app = (AppVariable) getApplicationContext();
-        harvestItems = app.getHarvestItemList();
+        AppVariable app_variable = (AppVariable) getApplicationContext();
+        harvestItems = app_variable.getHarvestItemList();
+
+        app_variable.initSocketThread("10.0.2.2",12345); // 로컬주소
+//        app_variable.initSocketThread("192.168.0.205", 12345); // 젯슨 공유기 ip
+
+
 
         new Thread(new Runnable() {
             @Override
@@ -58,12 +63,6 @@ public class MainScreen extends AppCompatActivity {
             }
         }).start();
 
-
-//        clientSocketThread = new ClientSocketThread("172.30.1.31", 12345);
-//        clientSocketThread = new ClientSocketThread("192.168.2.2", 12345);
-        clientSocketThread = new ClientSocketThread("192.168.0.205", 12345); // 젯슨 AESLAB 공유기 내부주소
-        clientSocketThread.start();
-
         act_state_rect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,16 +71,18 @@ public class MainScreen extends AppCompatActivity {
                     act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_enabled_background));
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.act_icon));
                     act_state_text.setText(app_variable.act_state);
-                    clientSocketThread.setNew_message("operating");
+                    app_variable.setNew_message("operating");
+//                    clientSocketThread.setNew_message("operating");
                 }
                 else if (app_variable.act_state.equals("operating")){
                     app_variable.act_state = ("waiting");
                     act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_disabled_background));
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.sleep_icon));
                     act_state_text.setText(app_variable.act_state);
-                    clientSocketThread.setNew_message("waiting");
-                    app.harvestItems.add(new HarvestHistory.HarvestItem("2023-09-20","423"));
-                    app.intakeItems.add(new IntakeHistory.IntakeItem("2023-09-20","423"));
+                    app_variable.setNew_message("waiting");
+//                    clientSocketThread.setNew_message("waiting");
+                    app_variable.harvestItems.add(new HarvestHistory.HarvestItem("2023-09-20","423"));
+                    app_variable.intakeItems.add(new IntakeHistory.IntakeItem("2023-09-20","423"));
                 }
             }
         });
@@ -107,7 +108,8 @@ public class MainScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainScreen.this,RobotSetting.class);
-                clientSocketThread.setNew_message("close");
+                app_variable.setNew_message("close");
+//                clientSocketThread.setNew_message("close");
                 startActivity(intent);
             }
         });
@@ -118,8 +120,8 @@ public class MainScreen extends AppCompatActivity {
         super.onDestroy();
 
         // When activity is destroyed, interrupt the thread.
-        if (clientSocketThread != null) {
-            clientSocketThread.interrupt();
-        }
+//        if (clientSocketThread != null) {
+//            clientSocketThread.interrupt();
+//        }
     }
 }
