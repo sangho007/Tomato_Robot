@@ -38,23 +38,28 @@ public class MainScreen extends AppCompatActivity {
         AppVariable app_variable = (AppVariable) getApplicationContext();
 
 
-//        app_variable.initSocketThread("10.0.2.2",12345); // 로컬주소
-        app_variable.initSocketThread("192.168.0.205", 12345); // 젯슨 공유기 ip
+        app_variable.initSocketThread("10.0.2.2",12345); // 로컬주소
+//        app_variable.initSocketThread("192.168.0.205", 12345); // 젯슨 공유기 ip
 
-        if(app_variable.act_state.equals("operating")){
-            act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_enabled_background));
-            act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.act_icon));
-            act_state_text.setText(app_variable.act_state);
-        }
+
+
+        app_variable.setOnActStateChangeListener(act_state -> {
+            if(act_state.equals("operating")) {
+                act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_enabled_background));
+                act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.act_icon));
+                act_state_text.setText("동작중");
+            }
+            // 그 외 act_state에 따른 UI 변경 코드
+        });
 
         act_state_rect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (app_variable.act_state.equals("waiting")){
-                    app_variable.act_state = ("operating");
+                    app_variable.setActState("operating");
                     act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_enabled_background));
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.act_icon));
-                    act_state_text.setText(app_variable.act_state);
+                    act_state_text.setText("동작중");
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -76,10 +81,10 @@ public class MainScreen extends AppCompatActivity {
 
                 }
                 else if (app_variable.act_state.equals("operating")){
-                    app_variable.act_state = ("waiting");
+                    app_variable.setActState("waiting");
                     act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_disabled_background));
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.sleep_icon));
-                    act_state_text.setText(app_variable.act_state);
+                    act_state_text.setText("대기중");
                     app_variable.setNew_message("waiting");
                 }
             }
@@ -140,7 +145,6 @@ public class MainScreen extends AppCompatActivity {
                                     video_view.start();
                                 }
                             });
-                            app_variable.uno_start = "false";
                             app_variable.setNew_message("complete");
                         }
                     }

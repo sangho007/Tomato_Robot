@@ -58,8 +58,8 @@ public class ClientSocketThread extends Thread {
                     if (receivedData != null) {
                         System.out.println("Received data: " + receivedData);
                         if (receivedData.equals("start")){
-                            appVariable.uno_start = "true";
-                            appVariable.act_state = "operating";
+                            appVariable.setNew_message("operating");
+                            appVariable.setActState("operating");
                         }
 
                     } else {

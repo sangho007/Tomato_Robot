@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 public class AppVariable extends Application {
     String act_state = "waiting";
-    String uno_start = "false";
+
+
     boolean socketFlag = false;
 
     ClientSocketThread socketThread;
@@ -17,7 +18,22 @@ public class AppVariable extends Application {
         super.onCreate();
     }
 
+    private OnActStateChangeListener listener;
 
+    public void setActState(String act_state) {
+        this.act_state = act_state;
+        if (listener != null) {
+            listener.onActStateChange(act_state);
+        }
+    }
+
+    public void setOnActStateChangeListener(OnActStateChangeListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnActStateChangeListener {
+        void onActStateChange(String act_state);
+    }
 
 
     public ClientSocketThread getSocketThread() {
