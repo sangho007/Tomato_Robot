@@ -23,10 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MainScreen.class);
-
-
                 // Set the message to send and let the thread handle it in its own time.
-
                 startActivity(intent);
             }
         });
@@ -35,10 +32,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SignUp.class);
-
-                // Set the message to send and let the thread handle it in its own time.
-
-
                 startActivity(intent);
             }
         });

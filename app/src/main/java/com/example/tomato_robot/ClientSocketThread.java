@@ -16,14 +16,17 @@ public class ClientSocketThread extends Thread {
     private Socket socket = null;
     private BufferedReader input = null;
     private PrintWriter output = null;
+    private AppVariable appVariable;
 
 
 
-    public ClientSocketThread(String host, int port) {
+
+    public ClientSocketThread(String host, int port, AppVariable appVariable) {
         this.host = host;
         this.port = port;
         this.old_message = "";  // Default message
         this.new_message = "";
+        this.appVariable = appVariable; // 생성자에서 AppVariable 객체를 받아옵니다.
     }
 
     // Call this method to set the message you want to send.
@@ -54,6 +57,11 @@ public class ClientSocketThread extends Thread {
 
                     if (receivedData != null) {
                         System.out.println("Received data: " + receivedData);
+                        if (receivedData.equals("start")){
+                            appVariable.uno_start = "true";
+                            appVariable.act_state = "operating";
+                        }
+
                     } else {
                         System.out.println("No data received.");
                         socket.close();
@@ -96,42 +104,6 @@ public class ClientSocketThread extends Thread {
         }
     }
 
-    //    @Override
-//    public void run() {
-//        try {
-//            socket = new Socket(host, port);
-//            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            output = new PrintWriter(socket.getOutputStream(), false);
-//
-//            while (!Thread.currentThread().isInterrupted()) {
-//
-//                if(output!=null ){
-//                    if (!old_message.equals(new_message)){
-//                        output.println(new_message);
-//                        old_message = new_message;
-//                    }
-//
-//                    output.flush();
-//                }
-//
-//                // ACK 대기 및 수신
-//                String receivedData = input.readLine();
-//
-//                if (receivedData != null) {
-//                    System.out.println("Received data: " + receivedData);
-//                } else {
-//                    System.out.println("No data received. Reconnecting...");
-//                    socket.close();
-//                    socket = new Socket(host, port);
-//                    input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//                    output = new PrintWriter(socket.getOutputStream(), true);
-//                }
-//            }
-//
-//            socket.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+
 
 }

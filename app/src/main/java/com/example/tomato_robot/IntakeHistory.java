@@ -19,73 +19,41 @@ import java.util.List;
 
 public class IntakeHistory extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private ArrayList<IntakeItem> intakeItems;
+//    private ArrayList<IntakeItem> intakeItems;
+    private List<ClassTomato> intakeTomatoes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intake_history);
 
+        TomatoDB tomatoDB = TomatoDB.getInstance(this);
         AppVariable app = (AppVariable) getApplicationContext();
-        intakeItems = app.getIntakeItems();
 
-        recyclerView = findViewById(R.id.recycler_view);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new IntakeAdapter(intakeItems));
-    }
-
-
-
-
-
-    static class IntakeItem {
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        private String date;
-
-        public void setImageId(int imageId) {
-            this.imageId = imageId;
-        }
-
-        private int imageId;
-
-        public void setWeight(String weight) {
-            this.weight = weight;
-        }
-
-        public String getWeight() {
-            return weight;
-        }
-
-        private String weight;
-
-        public IntakeItem(String date, String weight) {
-            this.date = date;
-            this.weight = weight;
-
-            if(Integer.parseInt(this.weight.toString()) >= 400){
-                this.imageId = R.drawable.yes_icon;
-            }else{
-                this.imageId = R.drawable.no_icon;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TomatoDao tomatoDao = tomatoDB.tomatoDao();
+                intakeTomatoes = tomatoDao.getAll();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView = findViewById(R.id.recycler_view);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(IntakeHistory.this));
+                        recyclerView.setAdapter(new IntakeHistory.IntakeAdapter(intakeTomatoes));
+                    }
+                });
             }
-        }
+        }).start();
 
-        public String getDate() {
-            return date;
-        }
-
-        public int getImageId() {
-            return imageId;
-        }
     }
+
+
 
     static class IntakeAdapter extends RecyclerView.Adapter<IntakeAdapter.ViewHolder> {
-        private List<IntakeItem> mData;
+        private List<ClassTomato> mData;
 
-        public IntakeAdapter(List<IntakeItem> data) {
+        public IntakeAdapter(List<ClassTomato> data) {
             this.mData = data;
         }
 
@@ -98,18 +66,23 @@ public class IntakeHistory extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            IntakeItem intakeItem = mData.get(position);
-            holder.title.setText(intakeItem.getDate());
+            ClassTomato intaketomato = mData.get(position);
+            holder.title.setText(intaketomato.getDate());
 
-            holder.icon.setImageResource(intakeItem.getImageId());
+            if(intaketomato.getWeight() >= 400){
+                holder.icon.setImageResource(R.drawable.yes_icon);
+            }else{
+                holder.icon.setImageResource(R.drawable.no_icon);
+            }
+
 
             holder.btn_detail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Context context = view.getContext();
                     Intent intent = new Intent(context, IntakeDetail.class);
-                    intent.putExtra("date",intakeItem.getDate());
-                    intent.putExtra("weight",intakeItem.getWeight());
+                    intent.putExtra("date",intaketomato.getDate());
+                    intent.putExtra("weight",Integer.toString(intaketomato.getWeight()));
                     context.startActivity(intent);
                 }
             });

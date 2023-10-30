@@ -19,48 +19,39 @@ import java.util.List;
 public class HarvestHistory extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ArrayList<HarvestItem> harvestItems;
-
+    private List<ClassTomato> harvestTomatoes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_harvest_history);
 
+        TomatoDB tomatoDB = TomatoDB.getInstance(this);
+
         AppVariable app = (AppVariable) getApplicationContext();
-        harvestItems = app.getHarvestItemList();
 
-//        app.harvestItems.add(new HarvestHistory.HarvestItem("2023-09-20","423"));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TomatoDao tomatoDao = tomatoDB.tomatoDao();
+                harvestTomatoes = tomatoDao.getAll();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView = findViewById(R.id.recycler_view);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(HarvestHistory.this));
+                        recyclerView.setAdapter(new HarvestAdapter(harvestTomatoes));
+                    }
+                });
+            }
+        }).start();
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new HarvestAdapter((harvestItems)));
-    }
-
-
-
-    static class HarvestItem {
-        private String date ;
-        private String weight;
-
-        public HarvestItem(String date, String weight){
-            this.date = date;
-            this.weight = weight;
-        }
-
-        public String getDate(){
-            return date;
-        }
-
-        public String getWeight(){
-            return weight;
-        }
     }
 
     public static class HarvestAdapter extends RecyclerView.Adapter<HarvestAdapter.ViewHolder> {
-        private List<HarvestItem> mData;
+        private List<ClassTomato> mData;
 
-        public HarvestAdapter(List<HarvestItem> data) {
+        public HarvestAdapter(List<ClassTomato> data) {
             this.mData = data;
         }
 
@@ -72,13 +63,13 @@ public class HarvestHistory extends AppCompatActivity {
         }
         @Override
         public int getItemCount() {
-            return mData.size();
+            return mData != null ? mData.size() : 0;
         }
+
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             TextView date;
             TextView weight;
-
             Button btn_view;
 
             public ViewHolder(View itemView) {
@@ -91,25 +82,21 @@ public class HarvestHistory extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            HarvestItem harvestItem = mData.get(position);
-            holder.date.setText(harvestItem.getDate());
-            holder.weight.setText(harvestItem.getWeight() + "g");
+            ClassTomato classTomato = mData.get(position);
+            holder.date.setText(classTomato.getDate());
+            holder.weight.setText(classTomato.getWeight() + "g");
 
             holder.btn_view.setOnClickListener(new View.OnClickListener(){
-
                 @Override
                 public void onClick(View view) {
                     // Use the context from the view instead.
                     Context context = view.getContext();
                     Intent intent = new Intent(context, HarvestDetail.class);
-                    intent.putExtra("date",harvestItem.getDate());
-                    intent.putExtra("weight",harvestItem.getWeight());
+                    intent.putExtra("date",classTomato.getDate());
+                    intent.putExtra("weight", Integer.toString(classTomato.getWeight()));
                     context.startActivity(intent);
                 }
             });
         }
-
-
     }
-
 }

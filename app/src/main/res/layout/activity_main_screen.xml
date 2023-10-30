@@ -22,6 +22,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/sleep_icon"
+
         app:layout_constraintBottom_toTopOf="@+id/act_state_text"
         app:layout_constraintEnd_toEndOf="@id/act_state_rect"
         app:layout_constraintStart_toStartOf="@id/act_state_rect"
@@ -43,7 +44,7 @@
         android:id="@+id/btn_harvest_history"
         android:layout_width="250dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/blue_btn_background"
         android:drawableLeft="@drawable/list_icon"
         android:drawablePadding="8dp"
@@ -53,14 +54,14 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_intake_history"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_intake_history"
         android:layout_width="250dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/blue_btn_background"
         android:drawableLeft="@drawable/list_icon"
         android:drawablePadding="8dp"
@@ -70,14 +71,14 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_robot_setting"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_robot_setting"
         android:layout_width="250dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/blue_btn_background"
         android:drawableLeft="@drawable/config_icon"
         android:drawablePadding="8dp"
@@ -85,8 +86,52 @@
         android:text="로봇 설정"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/signin_btn_background"
+        android:drawableLeft="@drawable/config_icon"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="종료"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/config_icon"
+        android:backgroundTint="#22000000"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.983"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_complete"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 </androidx.constraintlayout.widget.ConstraintLayout>
