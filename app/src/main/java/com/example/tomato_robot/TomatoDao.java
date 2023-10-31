@@ -9,11 +9,12 @@ import java.util.List;
 
 @Dao
 public interface TomatoDao {
-    @Query("SELECT * FROM classtomato")
+    @Query("SELECT * FROM classtomato ORDER BY date DESC")
     List<ClassTomato> getAll();
 
+
     @Query("SELECT * FROM classtomato WHERE date IN (:in_date)")
-    List<ClassTomato> loadAllByIds(int[] in_date);
+    List<ClassTomato> loadAllByDate(int[] in_date);
 
     @Insert
     void insertAll(ClassTomato... classTomatoes);

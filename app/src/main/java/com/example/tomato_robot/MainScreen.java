@@ -12,7 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -37,6 +40,7 @@ public class MainScreen extends AppCompatActivity {
 
         AppVariable app_variable = (AppVariable) getApplicationContext();
 
+        TomatoDB tomatoDB = TomatoDB.getInstance(this);
 
         app_variable.initSocketThread("10.0.2.2",12345); // 로컬주소
 //        app_variable.initSocketThread("192.168.0.205", 12345); // 젯슨 공유기 ip
@@ -131,9 +135,19 @@ public class MainScreen extends AppCompatActivity {
                     act_state_text.setText(app_variable.act_state);
                     app_variable.setNew_message("waiting");
 
+                    LocalDate date = LocalDate.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    String formattedDate = date.format(formatter);
+                    Random rand = new Random();
+
+                    int randomNum = rand.nextInt(7);
+
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
+
+                            TomatoDao tomatoDao = tomatoDB.tomatoDao();
+                            tomatoDB.tomatoDao().insertAll(new ClassTomato(formattedDate, "토마토", 55+randomNum));
 
                             runOnUiThread(new Runnable() {
                                 @Override

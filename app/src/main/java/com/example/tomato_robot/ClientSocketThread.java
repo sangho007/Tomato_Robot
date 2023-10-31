@@ -98,12 +98,8 @@ public class ClientSocketThread extends Thread {
 
                 Thread.sleep(100); // Sleep for 100 milliseconds.
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
-
 }

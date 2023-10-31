@@ -15,7 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class IntakeHistory extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -34,7 +38,32 @@ public class IntakeHistory extends AppCompatActivity {
             @Override
             public void run() {
                 TomatoDao tomatoDao = tomatoDB.tomatoDao();
-                intakeTomatoes = tomatoDao.getAll();
+                List<ClassTomato> allTomatoes = tomatoDao.getAll();
+                Map<String, Integer> map = new HashMap<>();
+
+                for (ClassTomato tomato : allTomatoes) {
+                    String date = tomato.getDate();
+                    int weight = tomato.getWeight();
+
+                    if (map.containsKey(date)) {
+                        weight += map.get(date);
+                    }
+
+                    map.put(date, weight);
+                }
+
+                intakeTomatoes = new ArrayList<>();
+                for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                    intakeTomatoes.add(new ClassTomato(entry.getKey(),"토마토" ,entry.getValue()));
+                }
+                // 날짜별로 내림차순 정렬
+                Collections.sort(intakeTomatoes, new Comparator<ClassTomato>() {
+                    @Override
+                    public int compare(ClassTomato o1, ClassTomato o2) {
+                        return o2.getDate().compareTo(o1.getDate());
+                    }
+                });
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -45,6 +74,7 @@ public class IntakeHistory extends AppCompatActivity {
                 });
             }
         }).start();
+
 
     }
 
