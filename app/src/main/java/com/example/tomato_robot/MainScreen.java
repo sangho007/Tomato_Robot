@@ -78,7 +78,7 @@ public class MainScreen extends AppCompatActivity {
                                     video_view.start();
                                 }
                             });
-                            app_variable.setNew_message("operating");
+                            app_variable.setNew_message("operating\n");
                         }
                     }
                     ).start();
@@ -89,7 +89,7 @@ public class MainScreen extends AppCompatActivity {
                     act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_disabled_background));
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.sleep_icon));
                     act_state_text.setText("대기중");
-                    app_variable.setNew_message("waiting");
+                    app_variable.setNew_message("waiting\n");
                 }
             }
         });
@@ -133,7 +133,7 @@ public class MainScreen extends AppCompatActivity {
                     act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_disabled_background));
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.sleep_icon));
                     act_state_text.setText(app_variable.act_state);
-                    app_variable.setNew_message("waiting");
+                    app_variable.setNew_message("waiting\n");
 
                     LocalDate date = LocalDate.now();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -159,7 +159,7 @@ public class MainScreen extends AppCompatActivity {
                                     video_view.start();
                                 }
                             });
-                            app_variable.setNew_message("complete");
+                            app_variable.setNew_message("complete\n");
                         }
                     }
                     ).start();
