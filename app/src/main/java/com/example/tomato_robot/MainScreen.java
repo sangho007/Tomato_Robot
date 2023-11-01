@@ -42,8 +42,10 @@ public class MainScreen extends AppCompatActivity {
 
         TomatoDB tomatoDB = TomatoDB.getInstance(this);
 
-        app_variable.initSocketThread("10.0.2.2",12345); // 로컬주소
-//        app_variable.initSocketThread("192.168.0.205", 12345); // 젯슨 공유기 ip
+//        app_variable.initSocketThread("10.0.2.2",12345); // 로컬주소
+//        app_variable.initSocketThread("172.30.1.72",12345); // 로컬주소
+
+        app_variable.initSocketThread("192.168.0.205", 12345); // 젯슨 공유기 ip
 
 
 
@@ -76,9 +78,10 @@ public class MainScreen extends AppCompatActivity {
 
                                     video_view.setVideoURI(uri);
                                     video_view.start();
+                                    app_variable.setNew_message("operating");
                                 }
                             });
-                            app_variable.setNew_message("operating\n");
+
                         }
                     }
                     ).start();
@@ -89,7 +92,7 @@ public class MainScreen extends AppCompatActivity {
                     act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_disabled_background));
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.sleep_icon));
                     act_state_text.setText("대기중");
-                    app_variable.setNew_message("waiting\n");
+                    app_variable.setNew_message("waiting");
                 }
             }
         });
@@ -133,7 +136,7 @@ public class MainScreen extends AppCompatActivity {
                     act_state_rect.setBackground(getResources().getDrawable(R.drawable.act_disabled_background));
                     act_state_img.setImageDrawable(getResources().getDrawable(R.drawable.sleep_icon));
                     act_state_text.setText(app_variable.act_state);
-                    app_variable.setNew_message("waiting\n");
+                    app_variable.setNew_message("waiting");
 
                     LocalDate date = LocalDate.now();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -159,7 +162,7 @@ public class MainScreen extends AppCompatActivity {
                                     video_view.start();
                                 }
                             });
-                            app_variable.setNew_message("complete\n");
+                            app_variable.setNew_message("complete");
                         }
                     }
                     ).start();
